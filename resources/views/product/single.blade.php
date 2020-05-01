@@ -31,9 +31,9 @@
                         <?php $i = 1 ?>
                         @foreach($product->images as $image)
                             @if ($image->color !== NULL)
-                            <div>
-                                <input data-image="{{ $image->color}}" type="radio" name="color" value="{{ $image->color}}" @if($i == 1) checked @endif>
-                                <label style="" for="red"><span style="background-color: #{{ $image->color}}"></span></label>
+                            <div data-toggle="tooltip" data-placement="top" title="{{ $image->colorName }}">
+                                <input data-colorName="{{ $image->colorName }}" data-image="{{ $image->color }}" type="radio" name="color" value="{{ $image->color}}" @if($i == 1) checked @endif autocomplete="off">
+                                <label style="" for="red"><span style="background-color: #{{ $image->color}}"  data-image="{{ $image->color}}"></span></label>
                             </div>
                             @endif
                         <?php $i++ ?>
@@ -75,13 +75,16 @@
             }
         });
         function addToCart() {
+            console.log($("input[name='color']:checked").attr('data-colorName'));
+
             $.ajax({
                 url: '/add-to-cart',
                 type: 'POST',
                 data: {
                     'product_id': {{ $product->id }},
                     'qty': $("#qty").val(),
-                    'color': $("input[name='color']:checked").val()
+                    'color': $("input[name='color']:checked").val(),
+                    'colorName': $("input[name='color']:checked").attr('data-colorName')
                 },
                 success: function (result) {
                     // alert("Item added to cart");
@@ -100,14 +103,18 @@
         };
 
         $(document).ready(function() {
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
 
-            $('.color-choose input').on('click', function() {
+            $('.color-choose label span').on('click', function() {
                 console.log('clicked');
                 var headphonesColor = $(this).attr('data-image');
-
                 $('.active').removeClass('active');
                 $('.left-column img[data-image = ' + headphonesColor + ']').addClass('active');
-                $(this).addClass('active');
+
+                $('.color-choose input[data-image = ' + headphonesColor + ']').addClass('active');
+                $('.color-choose input[data-image = ' + headphonesColor + ']').prop("checked", true);
             });
 
         });
@@ -143,7 +150,7 @@
         }
 
         .color-choose input[type="radio"] {
-        /* display: none; */
+            display: none;
         }
 
         .color-choose input[type="radio"] + label span {

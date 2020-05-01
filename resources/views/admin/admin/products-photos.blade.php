@@ -64,6 +64,7 @@
                                 </div>
                                 @endif
                             </div>
+                            <input name="colorName" class="form-control" value="{{ $image->colorName }}" placeholder="Enter Color Name" style="margin-bottom: 10px">
                             <button type="submit" class="btn btn-primary btn-block mt-1">Submit</button>
                         </form>
                     </div>

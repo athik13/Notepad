@@ -94,7 +94,7 @@
 
                     <div class="form-group">
                         <label for="ordernotes" class="text-black">Order Notes</label>
-                        <textarea name="ordernotes" id="ordernotes" cols="30" rows="5" class="form-control" placeholder="Write your notes here..."></textarea>
+                        <textarea name="ordernotes" id="ordernotes" cols="30" rows="5" class="form-control" placeholder="Write your notes here...">@foreach ($items as $item){{ $item->name }} - @if($item->attributes->colorName) Color: {{ $item->attributes->colorName }} @endif <br> @endforeach </textarea>
                     </div>
 
                 </div>
@@ -115,7 +115,7 @@
                                 <tbody>
                                     @foreach ($items as $item)
                                     <tr>
-                                        <td>{{ $item->name }} <strong class="mx-2">x</strong> {{ $item->quantity }}</td>
+                                        <td>{{ $item->name }} - @if($item->attributes->colorName) Color: {{ $item->attributes->colorName }} @endif <strong class="mx-2">x</strong> {{ $item->quantity }}</td>
                                         <td>{{ $item->price * $item->quantity }}</td>
                                     </tr>
                                     @endforeach
@@ -131,7 +131,10 @@
                                     @endforeach
                                     <tr>
                                         <td style="font-weight: bold;">TOTAL</td>
-                                        <td style="font-weight: bold;">{{ $total }}</td>
+                                        <td style="font-weight: bold; font-size: 24px;">{{ $total }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Cash on delivery or card machine <br> Cash on delivery or card machine</td>
                                     </tr>
                                 </tbody>
                             </table>

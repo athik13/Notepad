@@ -40,7 +40,7 @@
                         </thead>
                         <tbody>
                             @foreach($items as $item)
-                            {{-- {{ $item }} --}}
+                            {{ $item }}
                             <tr style="background-color: #{{ $item->attributes->color }}">
                                 <td class="product-thumbnail">
                                     @if($item->attributes->color)
@@ -55,6 +55,10 @@
                                 </td>
                                 <td class="product-name">
                                     <h2 class="h5 text-black">{{ $item->name }}</h2>
+                                    <br>
+                                    @if($item->attributes->colorName)
+                                    <h6>Color: {{ $item->attributes->colorName }}</h6>
+                                    @endif
                                 </td>
                                 <td>{{ $item->price }}</td>
                                 <td>

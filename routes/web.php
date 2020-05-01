@@ -99,7 +99,8 @@ Route::post('/add-to-cart', function(Request $request) {
             'price' => $product->retail_price,
             'quantity' => $request->qty,
             'attributes' => array(
-                'color' => $request->color
+                'color' => $request->color,
+                'colorName' => $request->colorName
             ),
             'associatedModel' => $product,
             'associatedModelWith' => ['images']

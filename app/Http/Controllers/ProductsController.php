@@ -177,6 +177,7 @@ class ProductsController extends Controller
     {
         $image = ProductPhotos::find($request->image_id);
         $image->color = $request->color;
+        $image->colorName = $request->colorName;
         $image->save();
 
         return redirect()->back()->with('alert-success', 'Successfully updated image color');

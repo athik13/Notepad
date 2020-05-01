@@ -24,6 +24,6 @@ class HomeController extends Controller
     public function index()
     {
         // $cart_items = \Cart::getContent();
-        return view('home');
+        return redirect('admin/');
     }
 }
