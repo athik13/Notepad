@@ -40,7 +40,7 @@
                         </thead>
                         <tbody>
                             @foreach($items as $item)
-                            {{ $item }}
+                            {{-- {{ $item }} --}}
                             <tr style="background-color: #{{ $item->attributes->color }}">
                                 <td class="product-thumbnail">
                                     @if($item->attributes->color)
