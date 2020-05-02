@@ -79,28 +79,6 @@ class SmsController extends Controller
             $phoneNumbers = explode(',', $request->phoneNumbers);
         }
 
-        if ($request->has('all-drivers')) {
-            $drivers = Driver::all();
-            // return $drivers;
-
-            foreach ($drivers as $driver) {
-                if ($driver->driver_phone !== null) {
-                    $phone = $driver->driver_phone;
-                    if (substr($phone, 0, 5) == '+9607') {
-                        // dd(substr($phone, 4, 11));
-                        array_push($phoneNumbers, substr($phone, 4, 11));
-
-                    } elseif (substr($phone, 0, 5) == '+9609') {
-                        // dd(substr($phone, 4, 11));
-                        array_push($phoneNumbers, substr($phone, 4, 11));
-
-                    } else {
-                        // NOTHING YET
-                    }
-                }
-            }
-        }
-
         $result = array_filter($phoneNumbers, function($value) { return !is_null($value) && $value !== ''; });
 
         // dd($result);

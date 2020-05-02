@@ -62,7 +62,7 @@
                                     <div class="form-group">
                                         <label for="phoneNumber">Phone Numbers</label>
                                         <input class="form-control" id="phoneNumbers" name="phoneNumbers" type="name" placeholder="9991234,7771234,9999123,77771234" autocomplete="off">
-                                        <p class="help-block">Enter the numbers here seperated by (comma ,) Must be a valid dhiraagu or ooredoo numbers. Dont add any country code. Eg: 9991234,7771234,9999123,77771234; Tick the box below to send a message to all drivers</p>
+                                        <p class="help-block">Enter the numbers here seperated by (comma ,) Must be a valid dhiraagu or ooredoo numbers. Dont add any country code. Eg: 9991234,7771234,9999123,77771234;</p>
                                     </div>
                                 </div>
 
