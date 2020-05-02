@@ -9,6 +9,8 @@ use App\Order;
 use App\OrderProduct;
 use App\Mail\OrderConfirmed;
 use Illuminate\Support\Facades\Mail;
+use App\Settings;
+use Mohamedathik\PhotoUpload\Upload;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +30,13 @@ Route::get('/', function () {
     $topPicks = Products::where('toppicks', '1')->get();
     $featuredProducts = Products::where('featured_product', '1')->get();
 
-    return view('welcome',compact('types', 'products', 'topPicks', 'featuredProducts'));
+    $bannerURL = Settings::where('setting', 'bannerURL')->first();
+    $bannerText1 = Settings::where('setting', 'bannerText1')->first();
+    $bannerText2 = Settings::where('setting', 'bannerText2')->first();
+    $bannerButtonText = Settings::where('setting', 'bannerButtonText')->first();
+    $bannerButtonURL = Settings::where('setting', 'bannerButtonURL')->first();
+
+    return view('welcome',compact('types', 'products', 'topPicks', 'featuredProducts', 'bannerURL', 'bannerText1', 'bannerText2', 'bannerButtonText', 'bannerButtonURL'));
 });
 
 
@@ -41,8 +49,84 @@ Route::post('/contact-us', 'ContactController@store');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', function () {
-        return view('admin.admin.home');
+        $bannerURL = Settings::where('setting', 'bannerURL')->first();
+        if ($bannerURL == null) {
+            $bannerURL = new Settings;
+            $bannerURL->setting = 'bannerURL';
+            $bannerURL->value = '/images/yaniu.png';
+            $bannerURL->save();
+        }
+
+        $bannerText1 = Settings::where('setting', 'bannerText1')->first();
+        if ($bannerText1 == null) {
+            $bannerText1 = new Settings;
+            $bannerText1->setting = 'bannerText1';
+            $bannerText1->value = 'MATTEVER LIPINK - 13 DATING RED';
+            $bannerText1->save();
+        }
+
+        $bannerText2 = Settings::where('setting', 'bannerText2')->first();
+        if ($bannerText2 == null) {
+            $bannerText2 = new Settings;
+            $bannerText2->setting = 'bannerText2';
+            $bannerText2->value = 'Eat, drink and even 😙, without refreshing your lipstick for 8 hours 💄';
+            $bannerText2->save();
+        }
+
+        $bannerButtonText = Settings::where('setting', 'bannerButtonText')->first();
+        if ($bannerButtonText == null) {
+            $bannerButtonText = new Settings;
+            $bannerButtonText->setting = 'bannerButtonText';
+            $bannerButtonText->value = 'View More';
+            $bannerButtonText->save();
+        }
+
+        $bannerButtonURL = Settings::where('setting', 'bannerButtonURL')->first();
+        if ($bannerButtonURL == null) {
+            $bannerButtonURL = new Settings;
+            $bannerButtonURL->setting = 'bannerButtonURL';
+            $bannerButtonURL->value = '#';
+            $bannerButtonURL->save();
+        }
+
+        return view('admin.admin.home', compact('bannerURL', 'bannerText1', 'bannerText2', 'bannerButtonText', 'bannerButtonURL'));
     });
+
+    Route::post('/admin/home-banner', function (Request $request) {
+        $bannerURL = Settings::where('setting', 'bannerURL')->first();
+
+        $file = $request->image;
+        $file_name = $file->getClientOriginalName();
+        $location = "/images";
+        $url_original = Upload::upload_original($file, $file_name, $location);
+
+        $bannerURL->value = '/storage'.$url_original;
+        $bannerURL->save();
+
+        return redirect()->back()->with('alert-success', 'Successfully uploaded Images');
+    });
+
+    Route::post('/admin/banner-text-update', function (Request $request) {
+        $bannerText1 = Settings::where('setting', 'bannerText1')->first();
+        $bannerText1->value = $request->bannerText1;
+        $bannerText1->save();
+
+        $bannerText2 = Settings::where('setting', 'bannerText2')->first();
+        $bannerText2->value = $request->bannerText2;
+        $bannerText2->save();
+
+        $bannerButtonText = Settings::where('setting', 'bannerButtonText')->first();
+        $bannerButtonText->value = $request->bannerButtonText;
+        $bannerButtonText->save();
+
+        $bannerButtonURL = Settings::where('setting', 'bannerButtonURL')->first();
+        $bannerButtonURL->value = $request->bannerButtonURL;
+        $bannerButtonURL->save();
+
+        return redirect()->back()->with('alert-success', 'Successfully updated text');
+    });
+
+
     Route::get('/admin/type', 'TypeController@index');
     Route::post('/admin/type', 'TypeController@store');
 

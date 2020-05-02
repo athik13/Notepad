@@ -2,17 +2,17 @@
 
 @section('content')
 
-    <div class="site-blocks-cover" style="background-image: url(images/yaniu.png);" data-aos="fade">
-      <div class="container">
+    <div class="site-blocks-cover" style="background-image: url({{ $bannerURL->value }}); background-position: 50% 25%;" data-aos="fade">
+      <div class="container-fluid">
         <div class="row align-items-start align-items-md-center justify-content-end">
-        {{--   <div class="col-md-5 text-center text-md-left pt-5 pt-md-0">
-                <h1 class="mb-2" style="color:white;">Finding Your Perfect Shoes</h1>
+          <div class="col-md-3 text-center text-md-left pt-5 pt-md-0 mr-3" style="border-color: transparent; background: rgba(0, 0, 0, 0.2);">
+                <h1 class="mb-2" style="color:white;">{{ $bannerText1->value }}</h1>
             <div class="intro-text text-center text-md-left">
-              <p class="mb-4" style="color:white;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at iaculis quam. Integer accumsan tincidunt fringilla. </p>
+              <p class="mb-4" style="color:white;">{{ $bannerText2->value }}</p>
               <p>
-                <a href="#" class="btn btn-sm btn-primary" >Shop Now</a>
+                <a href="{{ $bannerButtonURL->value }}" class="btn btn-sm btn-primary" >{{ $bannerButtonText->value }}</a>
               </p>
-            </div> --}}
+            </div>
           </div>
         </div>
       </div>
