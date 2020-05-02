@@ -55,6 +55,31 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/product/{product}/images', 'ProductsController@showImages');
     Route::post('/admin/product/{product}/images/upload-images', 'ProductsController@storeImages');
     Route::post('/admin/product/{product}/images/update-color', 'ProductsController@updateImageColor');
+
+    Route::prefix('admin')->group(function () {
+        Route::prefix('sms')->group(function () {
+            Route::get('/', 'SmsController@index');
+            Route::post('/', 'SmsController@send');
+
+            Route::get('/group', 'SmsController@group');
+            Route::post('/group', 'SmsController@groupSend');
+
+            Route::get('/sent', 'SmsController@sent');
+            Route::get('/sent/group/{id}', function ($id) {
+                if (request()->has('filter')) {
+                    if (request('filter') == 'error') {
+                        $individual_messages = IndividualGroupMessage::where('group_message_id', $id)->where('error', '1')->paginate(20);
+                        return view('sms.sent-detail', compact('individual_messages'));
+                    }
+                }
+
+                $individual_messages = IndividualGroupMessage::where('group_message_id', $id)->paginate(20);
+                return view('sms.sent-detail', compact('individual_messages'));
+            });
+
+            Route::get('/sent/unsent-messages/{id}', 'SmsController@sendUnsendMessages');
+        });
+    });
 });
 
 Auth::routes();

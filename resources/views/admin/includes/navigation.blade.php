@@ -27,6 +27,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/admin/type">Roles and Permissions</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/sms">SMS Portal</a>
+            </li>
         </ul>
 
 
