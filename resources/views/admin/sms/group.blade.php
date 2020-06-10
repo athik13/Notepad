@@ -41,7 +41,7 @@
                         <div class="col-md-12">
                             <center>
                                 <h5>Account Balance: MVR {{ $balance->balance }}</h5>
-                                <?php $messagesLeft = $balance->balance / '0.155'; ?>
+                                <?php $messagesLeft = $balance->balance / '0.25'; ?>
                                 <h6>Estimate messages left: {{ round($messagesLeft, 0) }}</h6>
                             </center>
                             <hr>

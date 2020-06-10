@@ -3,11 +3,11 @@
 @section('content')
 
     <div class="site-blocks-cover" style="background-image: url({{ $bannerURL->value }}); background-position: 50% 25%;" data-aos="fade">
-      <div class="container-fluid">
+      <div class="container-narrow">
         <div class="row align-items-start align-items-md-center justify-content-end">
-          <div class="col-md-3 text-center text-md-left pt-5 pt-md-0 mr-3" style="border-color: transparent; background: rgba(0, 0, 0, 0.2);">
+          <div class="col-md-4 text-center text-md-right pt-5 pt-md-0" style="border-color: transparent; background: rgba(0, 0, 0, 0); margin-right: 8rem !important">
                 <h1 class="mb-2" style="color:white;">{{ $bannerText1->value }}</h1>
-            <div class="intro-text text-center text-md-left">
+            <div class="intro-text text-center text-md-right">
               <p class="mb-4" style="color:white;">{{ $bannerText2->value }}</p>
               <p>
                 <a href="{{ $bannerButtonURL->value }}" class="btn btn-sm btn-primary" >{{ $bannerButtonText->value }}</a>

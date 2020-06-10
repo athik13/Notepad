@@ -60,7 +60,40 @@
                                 </table>
                             </div>
                             <div class="tab-pane fade" id="single" role="tabpanel" aria-labelledby="single-tab">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Sender Id</th>
+                                            <th>Nessage</th>
+                                            <th>Phone Number</th>
+                                            <th>State</th>
+                                            <th>Sent At</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($single_messages as $message)
+                                        <tr onclick="window.location='/sms/sent/group/{{ $message->id }}';">
+                                            <td class="col-sm-2">{{ $message->sender_id }}</td>
+                                            <td class="col-sm-8">{{ $message->message }}</td>
+                                            <td>{{ $message->phone_number }}</td>
+                                            <td>
+                                                <?php
+                                                    if($message->success == '1') {
+                                                        echo 'Message sent successfully';
+                                                    }
+                                                    if($message->error == '1') {
+                                                        echo 'Message failed to send. <br>';
+                                                        echo $message->error_message;
+                                                    }
 
+                                                ?>
+                                                @if($message->success == '0' AND $message->error == '0') The message is being sent @endif
+                                            </td>
+                                            <td class="col-sm-2">{{ $message->created_at->format('F d, Y h:m a') }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         </div> <!-- end card-->

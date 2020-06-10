@@ -126,9 +126,10 @@ Route::middleware(['auth'])->group(function () {
         return redirect()->back()->with('alert-success', 'Successfully updated text');
     });
 
-
     Route::get('/admin/type', 'TypeController@index');
     Route::post('/admin/type', 'TypeController@store');
+    Route::get('/admin/type/edit/{type}', 'TypeController@edit');
+    Route::post('/admin/type/edit/{type}', 'TypeController@update');
 
     Route::get('/admin/sub-type', 'SubTypeController@index');
     Route::post('/admin/sub-type', 'SubTypeController@store');
@@ -162,6 +163,15 @@ Route::middleware(['auth'])->group(function () {
             });
 
             Route::get('/sent/unsent-messages/{id}', 'SmsController@sendUnsendMessages');
+        });
+    });
+
+    Route::prefix('admin')->group(function () {
+        Route::prefix('orders')->group(function () {
+            Route::get('/', function () {
+                $orders = Order::all();
+                return view('admin.admin.orders', compact('orders'));
+            });
         });
     });
 });

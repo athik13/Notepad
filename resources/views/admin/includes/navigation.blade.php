@@ -6,6 +6,14 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+            @if (auth()->user()->email == 'user')
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/sms">SMS Portal</a>
+            </li>
+
+            @else
+
             <li class="nav-item ">
                 <a class="nav-link" href="/admin">Home</a>
             </li>
@@ -19,17 +27,19 @@
                 <a class="nav-link" href="/admin/product">Products</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/type">Orders</a>
+                <a class="nav-link" href="/admin/orders">Orders</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/admin/type">Users</a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="/admin/type">Roles and Permissions</a>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a class="nav-link" href="/admin/sms">SMS Portal</a>
             </li>
+
+            @endif
         </ul>
 
 

@@ -1,69 +1,109 @@
 @extends('admin.layout.admin-home')
 
 @section('content')
-<div class="container">
-<h3>Add Product Catergory</h3>
-<hr>
-</div>
 
-<div class="container">
+    @if (\Request::is('admin/type/edit/*'))
+    <div class="container">
+        <h3>Edit Product Catergory</h3>
+        <hr>
 
-<div class="flash-message">
-        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-            @if(Session::has('alert-' . $msg))
+		<div class="flash-message">
+            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                @if(Session::has('alert-' . $msg))
 
-            <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-            
-            @endif
-        @endforeach
-</div>
 
-<form method="POST" enctype="multipart/form-data" action="/admin/type">
-@csrf
-  <div class="form-group">
-    <label for="name">Product Catergory Name *</label>
-    <input type="text" class="form-control" id="name" name="name" placeholder="Lipstick" required>
-  </div>
-  <div class="form-group">
-    <label for="description">Description</label>
-    <input type="text" class="form-control" id="description" name="description" >
-  </div>
-  <div class="form-group">
-              <button type="submit" class="btn btn-primary">Submit</button>
+                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </p>
+
+                @endif
+            @endforeach
+
+		</div>
+		<form method="POST" enctype="multipart/form-data" action="/admin/type/edit/{{ $type->id }}">
+            @csrf
+			<div class="form-group">
+				<label for="name">Product Catergory Name *</label>
+				<input type="text" class="form-control" id="name" name="name" value="{{ $type->name }}" placeholder="Lipstick" required>
             </div>
-  </form>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description"  value="{{ $type->description }}" name="description" >
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a class="btn btn-info" href="/admin/type">Back</a>
+            </div>
+        </form>
+        <hr>
+        <br>
+    </div>
+    @else
 
- <hr>
-<br>
- <div class="container">
-<h3>Product Catergory List</h3>
+    <div class="container">
+        <h3>Add Product Catergory</h3>
+        <hr>
 
-</div>
-
-  <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Product Line Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">User id</th>
-      <th scope="col">Control</th>
-    </tr>
-  </thead>
-  <tbody>
-  @foreach($types as $type)
-    <tr>
-      <th scope="row">1</th>
-      <td>{{ $type->name }}</td>
-      <td>{{ $type->description }}</td>
-      <td>username</td>
-      <td><button type="button" class="btn btn-warning">Edit</button>  <button type="submit"  class="btn btn-danger">Delete</button></td>
-    </tr>
-    @endforeach
+		<div class="flash-message">
+            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                @if(Session::has('alert-' . $msg))
 
 
-  </tbody>
-</table>
+                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </p>
 
-<div>
+                @endif
+            @endforeach
+
+		</div>
+		<form method="POST" enctype="multipart/form-data" action="/admin/type">
+            @csrf
+			<div class="form-group">
+				<label for="name">Product Catergory Name *</label>
+				<input type="text" class="form-control" id="name" name="name" placeholder="Lipstick" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" name="description" >
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        <hr>
+        <br>
+	</div>
+    <div class="container">
+        <h3>Product Catergory List</h3>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Product Line Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">User id</th>
+                    <th scope="col">Control</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($types as $type)
+                <tr>
+                    <th scope="row">1</th>
+                    <td>{{ $type->name }}</td>
+                    <td>{{ $type->description }}</td>
+                    <td>{{ $type->user->name }}</td>
+                    <td>
+                        <a class="btn btn-warning" href="/admin/type/edit/{{ $type->id }}">Edit</a>
+                        <button type="submit"  class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    @endif
+
 @endsection

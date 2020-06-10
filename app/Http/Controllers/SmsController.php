@@ -9,6 +9,7 @@ use App\GroupMessage;
 use App\IndividualGroupMessage;
 use App\Jobs\SendGroupMessage;
 use App\Driver;
+use App\SingleMessage;
 
 class SmsController extends Controller
 {
@@ -48,24 +49,43 @@ class SmsController extends Controller
         //     return redirect('sms')->with('alert-danger', $e->getMessage());
         // }
 
+        $singleMessage = new SingleMessage;
+        $singleMessage->sender_id = $request->senderId;
+        $singleMessage->message = $request->message;
+        $singleMessage->phone_number = $phoneNumber;
+
         $code = $this->sendMessage($phoneNumber, $message, $from);
 
         // return redirect('sms')->with('alert-success', 'SMS successfully send');
 
         if ($code == '200') {
-            return redirect('sms')->with('alert-success', 'Success - Message has been sent successfully.');
+            $singleMessage->success = '1';
+            $singleMessage->save();
+            return redirect('admin/sms')->with('alert-success', 'Success - Message has been sent successfully.');
         }
         if ($code == '422') {
-            return redirect('sms')->with('alert-danger', 'Required fields are missing.');
+            $singleMessage->error = '1';
+            $singleMessage->error_message = 'Required fields are missing.';
+            $singleMessage->save();
+            return redirect('admin/sms')->with('alert-danger', 'Required fields are missing.');
         }
         if ($code == '400') {
-            return redirect('sms')->with('alert-danger', 'Bad Request - Invalid sender_id.');
+            $singleMessage->error = '1';
+            $singleMessage->error_message = 'Bad Request - Invalid sender_id.';
+            $singleMessage->save();
+            return redirect('admin/sms')->with('alert-danger', 'Bad Request - Invalid sender_id.');
         }
         if ($code == '401') {
-            return redirect('sms')->with('alert-danger', 'Unauthorized - Invalid authorization key.');
+            $singleMessage->error = '1';
+            $singleMessage->error_message = 'Unauthorized - Invalid authorization key.';
+            $singleMessage->save();
+            return redirect('admin/sms')->with('alert-danger', 'Unauthorized - Invalid authorization key.');
         }
         if ($code == '403') {
-            return redirect('sms')->with('alert-danger', 'Forbidden - Authorization header is missing.');
+            $singleMessage->error = '1';
+            $singleMessage->error_message = 'Forbidden - Authorization header is missing.';
+            $singleMessage->save();
+            return redirect('admin/sms')->with('alert-danger', 'Forbidden - Authorization header is missing.');
         }
 
     }
@@ -106,7 +126,8 @@ class SmsController extends Controller
     public function sent()
     {
         $group_messages = GroupMessage::all();
-        return view('admin.sms.sent', compact('group_messages'));
+        $single_messages = SingleMessage::all();
+        return view('admin.sms.sent', compact('group_messages', 'single_messages'));
     }
 
     // Send SMS function

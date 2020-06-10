@@ -71,7 +71,7 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        //
+        return view('admin.admin.type', compact('type'));
     }
 
     /**
@@ -83,7 +83,16 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        //
+        $this->validate(request(), [
+            'name' => 'required',
+        ]);
+
+        $type->name = request('name');
+        $type->description = request('description');
+        $type->user_id = auth()->id();
+        $type->save();
+
+        return redirect('admin/type')->with('alert-success', 'Successfully updated Product Catergory');
     }
 
     /**
