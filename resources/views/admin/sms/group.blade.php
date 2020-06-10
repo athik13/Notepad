@@ -24,7 +24,7 @@
                             <a class="nav-link" href="/admin/sms/sent">Sent Messages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Manage SMS groups</a>
+                            <a class="nav-link" href="/admin/sms/group/manage">Manage SMS groups</a>
                         </li>
                     </ul>
                 </div>
@@ -60,7 +60,19 @@
 
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="phoneNumber">Phone Numbers</label>
+                                        <label for="groupId">Select Group from list:</label>
+                                        <select class="form-control" id="groupId" name="groupId" autocomplete="off" required>
+                                            <option value="0" selected>No Group Selected</option>
+                                            @foreach ($groups as $group)
+                                            <option value="{{ $group->id }}">{{ $group->group_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="phoneNumber">Additional Phone Numbers</label>
                                         <input class="form-control" id="phoneNumbers" name="phoneNumbers" type="name" placeholder="9991234,7771234,9999123,77771234" autocomplete="off">
                                         <p class="help-block">Enter the numbers here seperated by (comma ,) Must be a valid dhiraagu or ooredoo numbers. Dont add any country code. Eg: 9991234,7771234,9999123,77771234;</p>
                                     </div>

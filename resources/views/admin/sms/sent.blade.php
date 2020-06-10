@@ -23,7 +23,7 @@
                             <a class="nav-link active" href="/admin/sms/sent">Sent Messages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Manage SMS groups</a>
+                            <a class="nav-link" href="/admin/sms/group/manage">Manage SMS groups</a>
                         </li>
                     </ul>
                 </div>
@@ -50,7 +50,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($group_messages as $message)
-                                        <tr onclick="window.location='/sms/sent/group/{{ $message->id }}';">
+                                        <tr onclick="window.location='/admin/sms/sent/group/{{ $message->id }}';">
                                             <td class="col-sm-2">{{ $message->sender_id }}</td>
                                             <td class="col-sm-8">{{ $message->message }}</td>
                                             <td class="col-sm-2">{{ $message->created_at->format('F d, Y h:m a') }}</td>

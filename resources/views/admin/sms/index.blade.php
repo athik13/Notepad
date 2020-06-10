@@ -23,7 +23,7 @@
                             <a class="nav-link" href="/admin/sms/sent">Sent Messages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Manage SMS groups</a>
+                            <a class="nav-link" href="/admin/sms/group/manage">Manage SMS groups</a>
                         </li>
                     </ul>
                 </div>

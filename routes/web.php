@@ -10,7 +10,10 @@ use App\OrderProduct;
 use App\Mail\OrderConfirmed;
 use Illuminate\Support\Facades\Mail;
 use App\Settings;
+use App\SmsGroup;
+use App\SmsGroupNumbers;
 use Mohamedathik\PhotoUpload\Upload;
+use App\IndividualGroupMessage;
 
 /*
 |--------------------------------------------------------------------------
@@ -159,10 +162,39 @@ Route::middleware(['auth'])->group(function () {
                 }
 
                 $individual_messages = IndividualGroupMessage::where('group_message_id', $id)->paginate(20);
-                return view('sms.sent-detail', compact('individual_messages'));
+                return view('admin.sms.sent-detail', compact('individual_messages'));
             });
 
             Route::get('/sent/unsent-messages/{id}', 'SmsController@sendUnsendMessages');
+
+            Route::get('/group/manage', function () {
+                $smsGroups = SmsGroup::all();
+                return view('admin.sms.manage.index', compact('smsGroups'));
+            });
+
+            Route::post('/group/manage', function (Request $request) {
+                $smsGroup = new SmsGroup;
+                $smsGroup->group_name = $request->groupName;
+                $smsGroup->save();
+
+                return redirect()->back()->with('alert-success', 'Successfully added a new SMS Group');
+            });
+
+            Route::get('/group/manage/{smsGroup}', function (SmsGroup $smsGroup) {
+                $numbers = SmsGroupNumbers::where('sms_group_id', $smsGroup->id)->get();
+                return view('admin.sms.manage.numbers', compact('smsGroup', 'numbers'));
+            });
+
+            Route::post('/group/manage/{smsGroup}', function (SmsGroup $smsGroup, Request $request) {
+                $number = new SmsGroupNumbers;
+                $number->sms_group_id = $smsGroup->id;
+                $number->name = $request->name;
+                $number->phone_number = $request->phoneNumber;
+                $number->save();
+
+                return redirect()->back()->with('alert-success', 'Successfully added new Number');
+            });
+
         });
     });
 

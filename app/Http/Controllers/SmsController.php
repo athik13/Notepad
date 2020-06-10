@@ -10,6 +10,7 @@ use App\IndividualGroupMessage;
 use App\Jobs\SendGroupMessage;
 use App\Driver;
 use App\SingleMessage;
+use App\SmsGroup;
 
 class SmsController extends Controller
 {
@@ -30,7 +31,10 @@ class SmsController extends Controller
     {
         $data = $this->getBalance();
         $balance = json_decode($data);
-        return view('admin.sms.group', compact('balance'));
+
+        $groups = SmsGroup::all();
+
+        return view('admin.sms.group', compact('balance', 'groups'));
     }
 
     public function send(Request $request)
@@ -95,11 +99,22 @@ class SmsController extends Controller
 
         $phoneNumbers = array();
 
+        if ($request->has('groupId')) {
+            if ($request->groupId !== '0') {
+                $group = SmsGroup::find($request->groupId);
+                $numbers = $group->numbers->pluck('phone_number')->toArray();
+            }
+        }
+
         if ($request->has('phoneNumbers')) {
             $phoneNumbers = explode(',', $request->phoneNumbers);
         }
 
-        $result = array_filter($phoneNumbers, function($value) { return !is_null($value) && $value !== ''; });
+        $results = array_filter($phoneNumbers, function($value) { return !is_null($value) && $value !== ''; });
+
+        // dd($numbers, $results);
+        $result = array_merge($results, $numbers);
+        // return $result;
 
         // dd($result);
         // return 'NONE';
@@ -120,7 +135,7 @@ class SmsController extends Controller
 
         SendGroupMessage::dispatch($groupMessage);
 
-        return redirect('sms/group')->with('alert-success', 'Success - Message has been added to queue.');
+        return redirect('admin/sms/group')->with('alert-success', 'Success - Message has been added to queue.');
     }
 
     public function sent()

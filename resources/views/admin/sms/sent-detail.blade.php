@@ -14,7 +14,7 @@
                 <div class="card-header">
                     <ul class="nav nav-pills justify-content-center">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/admin/sms">Single SMS</a>
+                            <a class="nav-link" href="/admin/sms">Single SMS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/sms/group">Group SMS</a>
@@ -23,7 +23,7 @@
                             <a class="nav-link active" href="/admin/sms/sent">Sent Messages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Manage SMS groups</a>
+                            <a class="nav-link" href="/admin/sms/group/manage">Manage SMS groups</a>
                         </li>
                     </ul>
                 </div>
