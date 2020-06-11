@@ -109,7 +109,12 @@
                     <th scope="row">1</th>
                     <td>{{ $type->name }}</td>
                     <td>{{ $type->description }}</td>
-                    <td>{{ $type->user->name }}</td>
+                    <td>
+                        @if ($type->user_id !== null)
+                            {{ $type->user->name }}
+                        @endif
+                    </td>
+
                     <td>
                         <a class="btn btn-warning" href="/admin/type/edit/{{ $type->id }}">Edit</a>
                         <button type="submit"  class="btn btn-danger">Delete</button>
