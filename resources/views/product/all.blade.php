@@ -12,14 +12,13 @@
               <div class="float-md-left mb-4"><h2 class="text-black h5">Shop All</h2></div>
               <div class="d-flex">
                 <div class="dropdown mr-1 ml-md-auto">
-                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">Reference</button>
+                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">Sort By</button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-                      <a class="dropdown-item" href="#">Relevance</a>
-                      <a class="dropdown-item" href="#">Name, A to Z</a>
-                      <a class="dropdown-item" href="#">Name, Z to A</a>
+                      <a class="dropdown-item" href="{{ url()->current() }}?sort=a-to-z">Name, A to Z</a>
+                      <a class="dropdown-item" href="{{ url()->current() }}?sort=z-to-a">Name, Z to A</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Price, low to high</a>
-                      <a class="dropdown-item" href="#">Price, high to low</a>
+                      <a class="dropdown-item" href="{{ url()->current() }}?sort=p-l-to-h">Price, low to high</a>
+                      <a class="dropdown-item" href="{{ url()->current() }}?sort=p-h-to-l">Price, high to low</a>
                     </div>
                 </div>
               </div>

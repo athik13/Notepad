@@ -69,7 +69,7 @@
             <nav class="site-navigation text-right text-md-center" role="navigation">
                 <div class="container">
                     <ul class="site-menu js-clone-nav d-none d-md-block">
-                        <li><a href="#">Home</a></li>
+                        <li><a href="/">Home</a></li>
                         <li class="has-children active">
                             <a href="#">Shop All</a>
                             <ul class="dropdown">
@@ -88,7 +88,7 @@
                             </ul>
                         </li>
                         <li><a href="/contact-us">Contact Us</a></li>
-                        <li><a href="#">Our Shops</a></li>
+                        <li><a href="#">Our Store</a></li>
                     </ul>
                 </div>
             </nav>

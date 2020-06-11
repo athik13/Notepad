@@ -216,26 +216,62 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('collections/{type}', function (Type $type) {
+Route::get('collections/{type}', function (Type $type, Request $request) {
     $types = Type::all();
-
     $subTypes = SubType::where('type_id', $type->id)->pluck('id')->toArray();
-    $products = Products::whereIn('sub_type_id', $subTypes)->get();
 
-    // return $products;
+    if (\Request::has('sort')) {
+        if ($request->sort == 'a-to-z') {
+            $products = Products::whereIn('sub_type_id', $subTypes)->orderBy('name')->get();
+        }
+
+        if ($request->sort == 'z-to-a') {
+            $products = Products::whereIn('sub_type_id', $subTypes)->orderByDesc('name')->get();
+        }
+
+        if ($request->sort == 'p-l-to-h') {
+            $products = Products::whereIn('sub_type_id', $subTypes)->orderBy('retail_price')->get();
+        }
+
+        if ($request->sort == 'p-h-to-l') {
+            $products = Products::whereIn('sub_type_id', $subTypes)->orderByDesc('retail_price')->get();
+        }
+    } else {
+        $products = Products::whereIn('sub_type_id', $subTypes)->get();
+    }
 
     return view('product.all', compact('types', 'products'));
 });
-
-Route::get('collections/{type}/{subType}', function (Type $type, SubType $subType) {
+Route::get('collections/{type}/{subType}', function (Type $type, SubType $subType, Request $request) {
     $types = Type::all();
 
-    $products = Products::where('sub_type_id', $subType->id)->get();
+    if (\Request::has('sort')) {
+        if ($request->sort == 'a-to-z') {
+            $products = Products::where('sub_type_id', $subType->id)->orderBy('name')->get();
+        }
+
+        if ($request->sort == 'z-to-a') {
+            $products = Products::where('sub_type_id', $subType->id)->orderByDesc('name')->get();
+        }
+
+        if ($request->sort == 'p-l-to-h') {
+            $products = Products::where('sub_type_id', $subType->id)->orderBy('retail_price')->get();
+        }
+
+        if ($request->sort == 'p-h-to-l') {
+            $products = Products::where('sub_type_id', $subType->id)->orderByDesc('retail_price')->get();
+        }
+    } else {
+        $products = Products::where('sub_type_id', $subType->id)->get();
+    }
 
     // return $products;
 
     return view('product.all', compact('types', 'products'));
 });
+
+
+
 Route::get('collections/{type}/{subType}/{product}', function (Type $type, SubType $subType, Products $product) {
     $types = Type::all();
     return view('product.single', compact('types', 'product'));
