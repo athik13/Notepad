@@ -41,18 +41,21 @@
 
                         <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
 
+                            <a href="/" style="border: 0px solid #white;">
                             <div class="site-logo">
+
                                 <img src="/note.png" width="200px">
                             </div>
+                            </a>
                         </div>
 
                         <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                             <div class="site-top-icons">
                                 <ul>
-                                    <li><a href="#"><span class="icon icon-person"></span></a></li>
+                                    {{-- <li><a href="#"><span class="icon icon-person"></span></a></li> --}}
                                     <li>
                                         <a href="/cart" class="site-cart">
-                                            <span class="icon icon-shopping_cart"></span>
+                                            View Cart <span class="icon icon-shopping_cart"></span>
                                         </a>
                                     </li>
                                     <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>

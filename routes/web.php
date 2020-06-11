@@ -27,8 +27,8 @@ use App\IndividualGroupMessage;
 */
 
 Route::get('/', function () {
-    $products = Products::all();
-    $types = Type::all();
+    $products = Products::take(3)->get();
+    $types = Type::take(6)->get();
 
     $topPicks = Products::where('toppicks', '1')->get();
     $featuredProducts = Products::where('featured_product', '1')->get();
