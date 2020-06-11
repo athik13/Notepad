@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Mohamedathik\PhotoUpload\Upload;
 
 class TypeController extends Controller
 {
@@ -43,11 +44,21 @@ class TypeController extends Controller
 
 
 
-        Type::create([
+        $type = Type::create([
             'name' => request('name'),
             'description' => request('description'),
             //'user_id' => auth()->id(),
         ]);
+
+        if (\Request::has('image')) {
+            $file = $request->image;
+            $file_name = $file->getClientOriginalName();
+            $location = "/images";
+            $url_original = Upload::upload_original($file, $file_name, $location);
+
+            $type->photo_url = '/storage'.$url_original;
+            $type->save();
+        }
 
         return redirect('admin/type')->with('alert-success', 'Successfully added a new Product Catergory');
     }
@@ -91,6 +102,16 @@ class TypeController extends Controller
         $type->description = request('description');
         $type->user_id = auth()->id();
         $type->save();
+
+        if (\Request::has('image')) {
+            $file = $request->image;
+            $file_name = $file->getClientOriginalName();
+            $location = "/images";
+            $url_original = Upload::upload_original($file, $file_name, $location);
+
+            $type->photo_url = '/storage'.$url_original;
+            $type->save();
+        }
 
         return redirect('admin/type')->with('alert-success', 'Successfully updated Product Catergory');
     }

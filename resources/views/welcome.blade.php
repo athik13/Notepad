@@ -59,7 +59,7 @@
           <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
             <a class="block-2-item" href="#">
               <figure class="image">
-                <img src="images/wait.jpg" alt="" class="img-fluid">
+                <img src="{{ $type->photo_url }}" alt="" class="img-fluid">
               </figure>
               <div class="text">
                 <span class="text-uppercase">Product Portfolio</span>

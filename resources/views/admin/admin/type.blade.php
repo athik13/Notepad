@@ -30,6 +30,16 @@
                 <label for="description">Description</label>
                 <input type="text" class="form-control" id="description"  value="{{ $type->description }}" name="description" >
             </div>
+
+            <div>
+                <img src="{{ $type->photo_url }}" class="img-thumbnail" width="300px">
+            </div>
+
+            <div class="form-group">
+                <label for="image">Upload Image to replace old one</label>
+                <input type="file" name="image">
+            </div>
+
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Save</button>
                 <a class="btn btn-info" href="/admin/type">Back</a>
@@ -67,6 +77,12 @@
                 <label for="description">Description</label>
                 <input type="text" class="form-control" id="description" name="description" >
             </div>
+
+            <div class="form-group">
+                <label for="image">Upload Image</label>
+                <input type="file" name="image">
+            </div>
+
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
