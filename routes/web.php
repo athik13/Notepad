@@ -52,6 +52,10 @@ Route::post('/contact-us', 'ContactController@store');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', function () {
+        if (auth()->user()->email == 'marketing@newedition.mv') {
+            return redirect('admin/sms');
+        }
+
         $bannerURL = Settings::where('setting', 'bannerURL')->first();
         if ($bannerURL == null) {
             $bannerURL = new Settings;

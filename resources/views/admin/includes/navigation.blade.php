@@ -6,7 +6,7 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            @if (auth()->user()->email == 'user')
+            @if (auth()->user()->email == 'marketing@newedition.mv')
 
             <li class="nav-item">
                 <a class="nav-link" href="/admin/sms">SMS Portal</a>
